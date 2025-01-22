@@ -23,7 +23,7 @@ app = Flask(__name__)
 def fetch_tickers():
     try:
         print("Getting tickers...")
-        api_key = "jWGIkWgNiFf7mJynZvy5wHNrsd3w0qZw"
+        api_key = "financialmodelingprep_apikey"
         base_url = "https://financialmodelingprep.com/api/v3/available-traded/list"
         params = {'apikey': api_key}
         response = requests.get(base_url, params=params)
