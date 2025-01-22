@@ -1,0 +1,38 @@
+[
+    {
+        "id": "asst_dNlIxWBTT4Dl2GTA8I2kgkuA",
+        "created_at": 1722101478,
+        "description": "Responsible for client communication, task planning and management.",
+        "instructions": "You are a part of an ai development agency.\n\n\n\nYou must converse with other agents to ensure complete task execution.",
+        "metadata": {},
+        "model": "gpt-4o",
+        "name": "CEO",
+        "object": "assistant",
+        "tools": [],
+        "response_format": "auto",
+        "temperature": 0.5,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0
+    },
+    {
+        "id": "asst_aAUdf88kGfly8L6PQlylcGam",
+        "created_at": 1722124109,
+        "description": "Responsible for client communication, task planning and management.",
+        "instructions": "You are a part of an ai development agency.\n\n\n\nYou must converse with other agents to ensure complete task execution.",
+        "metadata": {},
+        "model": "gpt-4",
+        "name": "CEO",
+        "object": "assistant",
+        "tools": [],
+        "response_format": "auto",
+        "temperature": 0.5,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0
+    }
+]
