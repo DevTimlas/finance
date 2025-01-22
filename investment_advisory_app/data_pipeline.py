@@ -10,7 +10,7 @@ from questdb.ingress import Sender
 
 def fetch_symbol_data(symbol):
     try:
-        api_key = "bf7cd1884b5b230fe36c6b3a643e4e34" # jWGIkWgNiFf7mJynZvy5wHNrsd3w0qZw
+        api_key = "financialmodelingprep_apikey"
         base_url = f"https://financialmodelingprep.com/api/v3/historical-price-full/{symbol}"
         params = {
             'apikey': api_key,
