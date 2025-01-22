@@ -1,0 +1,304 @@
+Strategy to build the Dataset
+
+
+1. Collect all the tickers from all global exhanges, save as table stocks using
+
+https://financialmodelingprep.com/api/v3/available-traded/list?apikey=
+
+2. Use yfinance to collect all historical data prices for past 30 years
+
+Reference Script (Its using csv files for getting tickers name, we will use above table from point 1 to get tickers)
+
+https://github.com/muzammil-sayed-rft/Finance/blob/master/stock_data/historical_sp500_data.py
+
+3. Get Yearly & Quaterly P&L data from yfinanace
+
+I went to https://www.screener.in/screen/new/ and clicked on Show all ratios
+
+
+
+took ratios from Quaterly P&L
+Sales latest quarter
+Profit after tax latest quarter
+YOY Quarterly sales growth
+YOY Quarterly profit growth
+Sales growth
+Profit growth
+Operating profit latest quarter
+Other income latest quarter
+EBIDT latest quarter
+Depreciation latest quarter
+EBIT latest quarter
+Interest latest quarter
+Profit before tax latest quarter
+Tax latest quarter
+Extraordinary items latest quarter
+Net Profit latest quarter
+GPM latest quarter
+OPM latest quarter
+NPM latest quarter
+Equity Capital latest quarter
+EPS latest quarter
+Operating profit 2quarters back
+Operating profit 3quarters back
+Sales 2quarters back
+Sales 3quarters back
+Net profit 2quarters back
+Net profit 3quarters back
+Operating profit growth
+Last result date
+Expected quarterly sales growth
+Expected quarterly sales
+Expected quarterly operating profit
+Expected quarterly net profit
+Expected quarterly EPS
+
+Than used chatgpt to generate the code.
+
+We need to have this for 
+
+Balance Sheet, Cash Flow, Ratios & Price.
+
+Some are direct values, some needs to be derived using
+
+yfinance or FMP  (this is vast list of API's https://www.jeroenbouma.com/projects/financetoolkit/ratios-module)
+
+Finally our data set will have following tables:
+
+1. Tickers
+2. stocks_hstorical
+3. stocks_fundamentals
+4. stocks_ratios
+5. stocks_balance_sheet
+6. stocks_technical_data 
+
+
+
+
+
+
+Certainly! Let's dive into extracting the various financial metrics from the P&L data using **yfinance**. I'll provide examples for each metric:
+
+1. **Sales (Revenue) for the Latest Quarter**:
+    ```python
+    latest_sales = quarterly_pl["Total Revenue"].iloc[-1]
+    ```
+
+2. **Profit After Tax for the Latest Quarter**:
+    ```python
+    latest_profit_after_tax = quarterly_pl["Net Income"].iloc[-1]
+    ```
+
+3. **Year-Over-Year (YOY) Quarterly Sales Growth**:
+    ```python
+    yoy_sales_growth = (latest_sales - quarterly_pl["Total Revenue"].iloc[-5]) / quarterly_pl["Total Revenue"].iloc[-5] * 100
+    ```
+
+4. **Year-Over-Year (YOY) Quarterly Profit Growth**:
+    ```python
+    latest_profit = quarterly_pl["Net Income"].iloc[-1]
+    profit_3_quarters_ago = quarterly_pl["Net Income"].iloc[-4]
+    yoy_profit_growth = (latest_profit - profit_3_quarters_ago) / profit_3_quarters_ago * 100
+    ```
+
+5. **Sales Growth**:
+    You can calculate sales growth over a specific period (e.g., 2 quarters):
+    ```python
+    sales_2_quarters_ago = quarterly_pl["Total Revenue"].iloc[-2]
+    sales_growth = (latest_sales - sales_2_quarters_ago) / sales_2_quarters_ago * 100
+    ```
+
+6. **Profit Growth**:
+    Similar to sales growth, calculate profit growth over a specific period:
+    ```python
+    profit_2_quarters_ago = quarterly_pl["Net Income"].iloc[-2]
+    profit_growth = (latest_profit - profit_2_quarters_ago) / profit_2_quarters_ago * 100
+    ```
+
+7. **Operating Profit for the Latest Quarter**:
+    ```python
+    operating_profit_latest = quarterly_pl["Operating Income"].iloc[-1]
+    ```
+
+8. **Other Income for the Latest Quarter**:
+    ```python
+    other_income_latest = quarterly_pl["Other Income"].iloc[-1]
+    ```
+
+9. **EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization) for the Latest Quarter**:
+    ```python
+    ebitda_latest = quarterly_pl["EBITDA"].iloc[-1]
+    ```
+
+10. **Depreciation for the Latest Quarter**:
+    ```python
+    depreciation_latest = quarterly_pl["Depreciation"].iloc[-1]
+    ```
+
+11. **EBIT (Earnings Before Interest and Taxes) for the Latest Quarter**:
+    ```python
+    ebit_latest = quarterly_pl["Earnings Before Interest & Taxes"].iloc[-1]
+    ```
+
+12. **Interest Expense for the Latest Quarter**:
+    ```python
+    interest_latest = quarterly_pl["Interest Expense"].iloc[-1]
+    ```
+
+13. **Profit Before Tax for the Latest Quarter**:
+    ```python
+    profit_before_tax_latest = quarterly_pl["Income Before Tax"].iloc[-1]
+    ```
+
+14. **Tax Expense for the Latest Quarter**:
+    ```python
+    tax_latest = quarterly_pl["Income Tax Expense"].iloc[-1]
+    ```
+
+15. **Extraordinary Items for the Latest Quarter**:
+    ```python
+    extraordinary_items_latest = quarterly_pl["Extraordinary Items"].iloc[-1]
+    ```
+
+16. **Net Profit for the Latest Quarter**:
+    ```python
+    net_profit_latest = quarterly_pl["Net Income"].iloc[-1]
+    ```
+
+17. **Gross Profit Margin (GPM) for the Latest Quarter**:
+    ```python
+    gpm_latest = (latest_sales - quarterly_pl["Cost of Revenue"].iloc[-1]) / latest_sales * 100
+    ```
+
+18. **Operating Profit Margin (OPM) for the Latest Quarter**:
+    ```python
+    opm_latest = operating_profit_latest / latest_sales * 100
+    ```
+
+19. **Net Profit Margin (NPM) for the Latest Quarter**:
+    ```python
+    npm_latest = net_profit_latest / latest_sales * 100
+    ```
+
+20. **Equity Capital for the Latest Quarter**:
+    ```python
+    equity_capital_latest = yearly_pl["Total Equity"].iloc[-1]
+    ```
+
+21. **Earnings Per Share (EPS) for the Latest Quarter**:
+    ```python
+    shares_outstanding = ticker.info["sharesOutstanding"]
+    eps_latest = net_profit_latest / shares_outstanding
+    ```
+
+22. **Operating Profit for 2 Quarters Back**:
+    ```python
+    operating_profit_2_quarters_ago = quarterly_pl["Operating Income"].iloc[-3]
+    ```
+
+23. **Operating Profit for 3 Quarters Back
+
+
+
+
+Certainly! Let's calculate the requested financial metrics based on the provided data:
+
+1. **Operating Profit 2 Quarters Back**:
+    ```python
+    operating_profit_2q_back = quarterly_pl["Operating Income"].iloc[-3]
+    ```
+
+2. **Operating Profit 3 Quarters Back**:
+    ```python
+    operating_profit_3q_back = quarterly_pl["Operating Income"].iloc[-4]
+    ```
+
+3. **Sales 2 Quarters Back**:
+    ```python
+    sales_2q_back = quarterly_pl["Total Revenue"].iloc[-3]
+    ```
+
+4. **Sales 3 Quarters Back**:
+    ```python
+    sales_3q_back = quarterly_pl["Total Revenue"].iloc[-4]
+    ```
+
+5. **Net Profit 2 Quarters Back**:
+    ```python
+    net_profit_2q_back = quarterly_pl["Net Income"].iloc[-3]
+    ```
+
+6. **Net Profit 3 Quarters Back**:
+    ```python
+    net_profit_3q_back = quarterly_pl["Net Income"].iloc[-4]
+    ```
+
+7. **Operating Profit Growth** (Percentage change from 3 quarters ago to the latest quarter):
+    ```python
+    operating_profit_growth = ((latest_operating_profit - operating_profit_3q_back) / operating_profit_3q_back) * 100
+    ```
+
+8. **Last Result Date** (Date of the latest available financial data):
+    ```python
+    last_result_date = quarterly_pl.index[-1]
+    ```
+
+9. **Expected Quarterly Sales Growth** (Assuming you have a specific expected growth rate):
+    ```python
+    expected_sales_growth_rate = 0.05  # Example: 5% expected growth
+    expected_quarterly_sales = latest_sales * (1 + expected_sales_growth_rate)
+    ```
+
+10. **Expected Quarterly Operating Profit** (Assuming a specific profit margin):
+    ```python
+    profit_margin = 0.15  # Example: 15% profit margin
+    expected_quarterly_operating_profit = expected_quarterly_sales * profit_margin
+    ```
+
+11. **Expected Quarterly Net Profit** (Assuming a specific net profit margin):
+    ```python
+    net_profit_margin = 0.1  # Example: 10% net profit margin
+    expected_quarterly_net_profit = expected_quarterly_sales * net_profit_margin
+    ```
+
+12. **Expected Quarterly Earnings Per Share (EPS)** (Assuming a specific number of shares outstanding):
+    ```python
+    shares_outstanding = 1000000  # Example: 1 million shares
+    expected_quarterly_eps = expected_quarterly_net_profit / shares_outstanding
+    ```
+
+Feel free to adjust the assumptions (growth rates, profit margins, etc.) based on your specific context. If you need further assistance or have additional requests, feel free to ask!
+
+
+
+>>> import yfinance as yf
+/home/tim/anaconda3/envs/tf10/lib/python3.10/site-packages/yfinance/base.py:48: FutureWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  _empty_series = pd.Series()
+>>> ticker = yf.Ticker("META")
+>>> quarterly_pl = ticker.quarterly_financials
+>>> quarterly_pl
+
+
+
+
+# Calculate ratios
+quarterly_pl['Sales latest quarter'] = quarterly_pl['Total Revenue']
+quarterly_pl['Profit after tax latest quarter'] = quarterly_pl['Net Income']
+quarterly_pl['YOY Quarterly sales growth'] = quarterly_pl['Total Revenue'].pct_change()
+quarterly_pl['YOY Quarterly profit growth'] = quarterly_pl['Net Income'].pct_change()
+quarterly_pl['Sales growth'] = yearly_pl['Total Revenue'].pct_change()
+quarterly_pl['Profit growth'] = yearly_pl['Net Income'].pct_change()
+quarterly_pl['Operating profit latest quarter'] = quarterly_pl['Operating Income']
+quarterly_pl['Other income latest quarter'] = quarterly_pl['Other Income Expense']
+quarterly_pl['EBIDT latest quarter'] = quarterly_pl['EBIT'] + quarterly_pl['Reconciled Depreciation']
+quarterly_pl['Depreciation latest quarter'] = quarterly_pl['Reconciled Depreciation']
+quarterly_pl['EBIT latest quarter'] = quarterly_pl['EBIT']
+quarterly_pl['Interest latest quarter'] = quarterly_pl['Interest Expense']
+quarterly_pl['Profit before tax latest quarter'] = quarterly_pl['Pretax Income']
+quarterly_pl['Tax latest quarter'] = quarterly_pl['Tax Provision']
+quarterly_pl['Extraordinary items latest quarter'] = quarterly_pl['Total Unusual Items']
+quarterly_pl['Net Profit latest quarter'] = quarterly_pl['Net Income']
+quarterly_pl['GPM latest quarter'] = quarterly_pl['Gross Profit'] / quarterly_pl['Total Revenue']
+quarterly_pl['OPM latest quarter'] = quarterly_pl['Operating Income'] / quarterly_pl['Total Revenue']
+quarterly_pl['NPM latest quarter'] = quarterly_pl['Net Income'] / quarterly_pl['Total Revenue']
+quarterly_pl['EPS latest quarter'] = quarterly_pl['Diluted EPS']
