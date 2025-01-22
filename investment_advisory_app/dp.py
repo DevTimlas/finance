@@ -11,7 +11,7 @@ from ta import add_all_ta_features
 def fetch_tickers():
     try:
         print("getting tickers...")
-        api_key = "jWGIkWgNiFf7mJynZvy5wHNrsd3w0qZw" # jWGIkWgNiFf7mJynZvy5wHNrsd3w0qZw
+        api_key = "financialmodelingprep_apikey" # jWGIkWgNiFf7mJynZvy5wHNrsd3w0qZw
         base_url = f"https://financialmodelingprep.com/api/v3/available-traded/list"
         params = {'apikey': api_key}
         response = requests.get(base_url, params=params)
